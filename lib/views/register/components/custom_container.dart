@@ -18,7 +18,7 @@ class CustomContainer extends StatelessWidget {
         letterSpacing: 2);
 
     final size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       height: size.height * 0.5,
       child: Stack(
         children: [

@@ -1,6 +1,5 @@
 part of 'obscuretext_bloc.dart';
 
-@immutable
 abstract class ObscuretextState {
   String assets;
   bool obscure;

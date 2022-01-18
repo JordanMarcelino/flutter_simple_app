@@ -15,7 +15,7 @@ class LoginButton extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-      child: Container(
+      child: SizedBox(
         height: size.height * 0.1,
         width: size.width,
         child: Stack(

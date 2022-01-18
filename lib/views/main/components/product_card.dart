@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_app/main.dart';
 import 'package:flutter_simple_app/models/utils.dart';
-import 'package:flutter_simple_app/views/details/body.dart';
-import 'package:lottie/lottie.dart';
-
 import '../../../constants.dart';
 
 class ProductCard extends StatelessWidget {
@@ -26,7 +23,6 @@ class ProductCard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        print(id);
         Utils.id = id;
         Utils.image = image;
         Utils.desc = desc;

@@ -1,8 +1,7 @@
 part of 'clicked_bloc.dart';
 
-@immutable
 abstract class ClickedState {
-  List<bool> click = [false, false, false];
+  List<bool> click = [false, false, false, false];
   ClickedState({required this.click});
 }
 

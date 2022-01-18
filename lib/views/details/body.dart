@@ -4,9 +4,14 @@ import 'package:flutter_simple_app/models/bloc/clicked/clicked_bloc.dart';
 import 'package:flutter_simple_app/models/utils.dart';
 import 'package:flutter_simple_app/views/details/pages/details_home.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   const DetailPage({Key? key}) : super(key: key);
 
+  @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
