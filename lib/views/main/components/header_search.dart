@@ -6,12 +6,11 @@ import 'package:lottie/lottie.dart';
 import '../../../constants.dart';
 
 class HeaderWithSearcBar extends StatelessWidget {
-  const HeaderWithSearcBar({
-    Key? key,
-    required this.widget,
-  }) : super(key: key);
+  const HeaderWithSearcBar({Key? key, required this.widget, required this.name})
+      : super(key: key);
 
   final MainHome widget;
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,7 @@ class HeaderWithSearcBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Hi ${widget.name}!',
+                'Hi $name!',
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 30,

@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 class TextAndMoreButton extends StatelessWidget {
-  const TextAndMoreButton({
-    Key? key,
-  }) : super(key: key);
+  const TextAndMoreButton({Key? key, required this.text}) : super(key: key);
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class TextAndMoreButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text.rich(TextSpan(
-                text: 'Recommended',
+                text: text,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 22,

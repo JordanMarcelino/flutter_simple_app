@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_app/constants.dart';
+import 'package:flutter_simple_app/views/details/body.dart';
+import 'package:flutter_simple_app/views/details/pages/details_home.dart';
 import 'package:flutter_simple_app/views/register/body.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'models/utils.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const Wrapper(),
+        '/details': (context) => const DetailPage()
       },
     );
   }
