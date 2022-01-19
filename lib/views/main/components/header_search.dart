@@ -24,6 +24,8 @@ class HeaderWithSearcBar extends StatelessWidget {
             children: [
               Text(
                 'Hi $name!',
+                maxLines: 2,
+                softWrap: true,
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 30,

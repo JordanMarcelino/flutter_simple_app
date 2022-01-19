@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_simple_app/main.dart';
+import 'package:flutter_simple_app/models/users/user.dart';
+
 import 'package:flutter_simple_app/models/utils.dart';
 import 'package:flutter_simple_app/views/register/components/container_signup.dart';
-import 'package:flutter_simple_app/views/register/components/signup_account.dart';
+import 'package:flutter_simple_app/views/register/components/sign_up_account.dart';
 import 'package:lottie/lottie.dart';
 import '../../../constants.dart';
 import '../components/login_button.dart';
@@ -26,14 +30,14 @@ class _LoginPageState extends State<SignUp> {
   @override
   void dispose() {
     email.dispose();
-    password.dispose();
     name.dispose();
+    password.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
 
     return SingleChildScrollView(
       clipBehavior: Clip.antiAlias,
@@ -50,14 +54,15 @@ class _LoginPageState extends State<SignUp> {
                 height: size.height * 0.4,
               ),
               SignUpAccount(
-                email: email,
-                password: password,
-                name: name,
-                formKey: formKey,
-              ),
+                  email: email,
+                  name: name,
+                  password: password,
+                  formKey: formKey),
               LoginButton(
                 text: 'Register',
                 onPress: () async {
+                  final user = UserAccount(name: name.text);
+                  await createUser(user);
                   await signUp();
                 },
               ),
@@ -106,6 +111,16 @@ class _LoginPageState extends State<SignUp> {
     );
   }
 
+  Future createUser(UserAccount user) async {
+    final docUser =
+        FirebaseFirestore.instance.collection('users').doc(name.text);
+    user.id = docUser.id;
+
+    Utils.name = name.text;
+    var json = user.toJson();
+    await docUser.set(json);
+  }
+
   Future signUp() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
@@ -124,7 +139,6 @@ class _LoginPageState extends State<SignUp> {
     );
 
     try {
-      Utils.name = name.text;
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email.text.trim(), password: password.text.trim());
     } on FirebaseAuthException catch (e) {

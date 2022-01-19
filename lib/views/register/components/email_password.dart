@@ -5,13 +5,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants.dart';
 
-class EmailAndPassword extends StatelessWidget {
+class EmailAndPassword extends StatefulWidget {
   final TextEditingController email;
   final TextEditingController password;
   const EmailAndPassword(
       {Key? key, required this.email, required this.password})
       : super(key: key);
 
+  @override
+  State<EmailAndPassword> createState() => _EmailAndPasswordState();
+}
+
+class _EmailAndPasswordState extends State<EmailAndPassword> {
   @override
   Widget build(BuildContext context) {
     bool toggle = false;
@@ -27,7 +32,7 @@ class EmailAndPassword extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              controller: email,
+              controller: widget.email,
               style: style,
               decoration: InputDecoration(
                   hintText: 'Email',
@@ -43,7 +48,7 @@ class EmailAndPassword extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextField(
-                        controller: password,
+                        controller: widget.password,
                         obscureText: state.obscure,
                         style: style,
                         decoration: InputDecoration(

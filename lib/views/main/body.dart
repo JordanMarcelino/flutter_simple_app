@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_app/constants.dart';
-import 'package:flutter_simple_app/models/utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'pages/main_home.dart';
 
@@ -39,7 +38,7 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       appBar: appBar(),
-      body: MainHome(name: Utils.name),
+      body: const MainHome(),
     );
   }
 
