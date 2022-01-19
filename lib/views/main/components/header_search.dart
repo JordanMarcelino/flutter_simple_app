@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_simple_app/models/users/user.dart';
 import 'package:flutter_simple_app/views/main/pages/main_home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../constants.dart';
 
-class HeaderWithSearcBar extends StatelessWidget {
-  const HeaderWithSearcBar({Key? key, required this.widget, required this.name})
+class HeaderWithSearcBar extends StatefulWidget {
+  const HeaderWithSearcBar(
+      {Key? key, required this.widget, required this.account})
       : super(key: key);
-
+  final UserAccount? account;
   final MainHome widget;
-  final String name;
 
+  @override
+  State<HeaderWithSearcBar> createState() => _HeaderWithSearcBarState();
+}
+
+class _HeaderWithSearcBarState extends State<HeaderWithSearcBar> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -23,7 +29,7 @@ class HeaderWithSearcBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Hi $name!',
+                'Hi ${widget.account!.name}!',
                 maxLines: 2,
                 softWrap: true,
                 style: const TextStyle(

@@ -6,6 +6,6 @@ class UserAccount {
 
   Map<String, dynamic> toJson() => {'id': id, 'name': name};
 
-  UserAccount fromJson(Map<String, dynamic> json) =>
-      UserAccount(name: json['name'], id: json['id']);
+  static UserAccount fromJson(Map<String, dynamic>? json) =>
+      UserAccount(name: json!['name'], id: json['id']);
 }

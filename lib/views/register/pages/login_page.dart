@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_simple_app/main.dart';
 import 'package:flutter_simple_app/models/utils.dart';
 import 'package:flutter_simple_app/views/register/components/email_password.dart';
+import 'package:flutter_simple_app/views/register/pages/forgot_password.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import '../../../constants.dart';
 import '../components/custom_container.dart';
@@ -20,6 +22,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController forgotEmail = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -79,7 +83,16 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: TextDecoration.underline))
             ])),
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => ForgotPage(
+                            forgotEmail: forgotEmail,
+                            forgotClicked: resetPassword,
+                            formKey: formKey,
+                          ),
+                      barrierDismissible: false);
+                },
                 child: const Text(
                   'Forgot',
                   style: TextStyle(
@@ -92,6 +105,39 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future resetPassword() async {
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) return;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height * 0.2,
+            child: LottieBuilder.network(
+                'https://assets4.lottiefiles.com/packages/lf20_szlepvdh.json'),
+          ),
+        );
+      },
+    );
+
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: forgotEmail.text.trim());
+      Fluttertoast.showToast(
+          msg: 'Password reset email sent',
+          backgroundColor: Colors.greenAccent,
+          gravity: ToastGravity.SNACKBAR,
+          fontSize: 20,
+          textColor: Colors.white);
+
+      navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    } on FirebaseAuthException catch (e) {
+      Utils.showMessage(e.message);
+    }
   }
 
   Future logIn() async {

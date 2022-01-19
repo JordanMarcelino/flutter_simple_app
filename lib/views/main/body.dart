@@ -1,7 +1,9 @@
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_app/constants.dart';
+import 'package:flutter_simple_app/models/users/user.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'pages/main_home.dart';
 
@@ -13,6 +15,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +42,29 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       appBar: appBar(),
-      body: const MainHome(),
+      body: FutureBuilder<UserAccount?>(
+          future: readUsers(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                  child: Text('Something went wrong ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              return MainHome(
+                userAccount: snapshot.data,
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          }),
     );
+  }
+
+  Future<UserAccount?> readUsers() async {
+    final docUser =
+        FirebaseFirestore.instance.collection('users').doc(user!.uid);
+    final snapshot = await docUser.get();
+
+    if (snapshot.exists) return UserAccount.fromJson(snapshot.data());
   }
 
   AppBar appBar() {

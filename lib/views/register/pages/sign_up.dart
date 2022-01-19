@@ -2,10 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_simple_app/main.dart';
 import 'package:flutter_simple_app/models/users/user.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_simple_app/models/utils.dart';
 import 'package:flutter_simple_app/views/register/components/container_signup.dart';
 import 'package:flutter_simple_app/views/register/components/sign_up_account.dart';
@@ -22,6 +21,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _LoginPageState extends State<SignUp> {
+  final _auth = FirebaseAuth.instance;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -62,8 +62,7 @@ class _LoginPageState extends State<SignUp> {
                 text: 'Register',
                 onPress: () async {
                   final user = UserAccount(name: name.text);
-                  await createUser(user);
-                  await signUp();
+                  await signUp(user);
                 },
               ),
               registerAndForgot(size),
@@ -112,16 +111,23 @@ class _LoginPageState extends State<SignUp> {
   }
 
   Future createUser(UserAccount user) async {
+    User? currentUser = _auth.currentUser;
     final docUser =
-        FirebaseFirestore.instance.collection('users').doc(name.text);
-    user.id = docUser.id;
+        FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
+    user.id = currentUser.uid;
 
-    Utils.name = name.text;
     var json = user.toJson();
     await docUser.set(json);
+
+    Fluttertoast.showToast(
+        msg: 'Account has created successfully',
+        backgroundColor: Colors.greenAccent,
+        gravity: ToastGravity.CENTER,
+        fontSize: 20,
+        textColor: Colors.white);
   }
 
-  Future signUp() async {
+  Future signUp(UserAccount userAccount) async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
 
@@ -139,8 +145,10 @@ class _LoginPageState extends State<SignUp> {
     );
 
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email.text.trim(), password: password.text.trim());
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: email.text.trim(), password: password.text.trim())
+          .then((value) => createUser(userAccount));
     } on FirebaseAuthException catch (e) {
       Utils.showMessage(e.message);
     }
