@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_simple_app/constants.dart';
 import 'package:flutter_simple_app/views/details/body.dart';
+import 'package:flutter_simple_app/views/main/body.dart';
 import 'package:flutter_simple_app/views/register/body.dart';
+import 'package:flutter_simple_app/views/users/body.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'models/utils.dart';
@@ -53,7 +55,26 @@ class MyApp extends StatelessWidget {
               splashTransition: SplashTransition.slideTransition,
               pageTransitionType: PageTransitionType.rightToLeftWithFade,
             ),
-        '/details': (context) => const DetailPage()
+        '/details': (context) => const DetailPage(),
+        '/home': (context) => const MainPage(),
+        '/favorite': (context) => const MainPage(),
+        '/user': (context) => const UserPage(),
+      },
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/user':
+            return PageTransition(
+                type: PageTransitionType.leftToRight,
+                child: const UserPage(),
+                settings: settings);
+          case '/home':
+            return PageTransition(
+                type: PageTransitionType.rightToLeft,
+                child: const UserPage(),
+                settings: settings);
+          default:
+            null;
+        }
       },
     );
   }

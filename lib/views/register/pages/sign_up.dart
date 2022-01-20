@@ -1,14 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_app/main.dart';
+import 'package:flutter_simple_app/models/users/google_sign_in.dart';
 import 'package:flutter_simple_app/models/users/user.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_simple_app/models/utils.dart';
 import 'package:flutter_simple_app/views/register/components/container_signup.dart';
 import 'package:flutter_simple_app/views/register/components/sign_up_account.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
 import '../components/login_button.dart';
 
@@ -21,7 +22,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _LoginPageState extends State<SignUp> {
-  final _auth = FirebaseAuth.instance;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -94,37 +94,29 @@ class _LoginPageState extends State<SignUp> {
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline))
             ])),
-            TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Forgot',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: kTextColor,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline),
+            ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                    primary: kPrimaryColor,
+                    padding: const EdgeInsets.all(10),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15))),
+                onPressed: () {
+                  final provider =
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
+                  provider.signIn();
+                },
+                icon: const FaIcon(
+                  FontAwesomeIcons.google,
+                  color: Colors.red,
+                ),
+                label: const Text(
+                  'Sign up with google',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ))
           ],
         ),
       ),
     );
-  }
-
-  Future createUser(UserAccount user) async {
-    User? currentUser = _auth.currentUser;
-    final docUser =
-        FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
-    user.id = currentUser.uid;
-
-    var json = user.toJson();
-    await docUser.set(json);
-
-    Fluttertoast.showToast(
-        msg: 'Account has created successfully',
-        backgroundColor: Colors.greenAccent,
-        gravity: ToastGravity.CENTER,
-        fontSize: 20,
-        textColor: Colors.white);
   }
 
   Future signUp(UserAccount userAccount) async {
@@ -135,8 +127,8 @@ class _LoginPageState extends State<SignUp> {
       context: context,
       builder: (context) {
         return Center(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.2,
+          child: Transform.scale(
+            scale: 1.5,
             child: LottieBuilder.network(
                 'https://assets4.lottiefiles.com/packages/lf20_szlepvdh.json'),
           ),
@@ -145,10 +137,9 @@ class _LoginPageState extends State<SignUp> {
     );
 
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: email.text.trim(), password: password.text.trim())
-          .then((value) => createUser(userAccount));
+      Utils.name = name.text;
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email.text.trim(), password: password.text.trim());
     } on FirebaseAuthException catch (e) {
       Utils.showMessage(e.message);
     }

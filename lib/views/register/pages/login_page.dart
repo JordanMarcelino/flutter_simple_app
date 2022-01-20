@@ -115,8 +115,8 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) {
         return Center(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.2,
+          child: Transform.scale(
+            scale: 1.5,
             child: LottieBuilder.network(
                 'https://assets4.lottiefiles.com/packages/lf20_szlepvdh.json'),
           ),
@@ -145,8 +145,8 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) {
         return Center(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.2,
+          child: Transform.scale(
+            scale: 1.5,
             child: LottieBuilder.network(
                 'https://assets4.lottiefiles.com/packages/lf20_szlepvdh.json'),
           ),

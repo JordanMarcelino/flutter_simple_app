@@ -2,22 +2,22 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_app/constants.dart';
 import 'package:flutter_simple_app/models/users/user.dart';
 import 'package:flutter_simple_app/models/utils.dart';
+import 'package:flutter_simple_app/views/users/pages/user_home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'pages/main_home.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+import '../../constants.dart';
+
+class UserPage extends StatefulWidget {
+  const UserPage({Key? key}) : super(key: key);
 
   @override
-  _MainPageState createState() => _MainPageState();
+  _UserPageState createState() => _UserPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _UserPageState extends State<UserPage> {
   final user = FirebaseAuth.instance.currentUser;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,12 +34,11 @@ class _MainPageState extends State<MainPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
-              onTap: (Utils.currentRoute == '/home')
-                  ? null
-                  : () {
-                      Navigator.pushReplacementNamed(context, '/home',
-                          arguments: 'arguments data');
-                    },
+              onTap: () {
+                Utils.name = '/home';
+                Navigator.pushReplacementNamed(context, '/home',
+                    arguments: 'arguments data');
+              },
               child: SvgPicture.asset(
                 'assets/icons/shopping-cart.svg',
                 color: kPrimaryColor,
@@ -49,11 +48,12 @@ class _MainPageState extends State<MainPage> {
                 onTap: () {},
                 child: SvgPicture.asset('assets/icons/heart.svg')),
             GestureDetector(
-                onTap: () {
-                  Utils.currentRoute = '/user';
-                  Navigator.pushReplacementNamed(context, '/user',
-                      arguments: 'arguments data');
-                },
+                onTap: (Utils.currentRoute == '/user')
+                    ? null
+                    : () {
+                        Navigator.pushReplacementNamed(context, '/user',
+                            arguments: 'arguments data');
+                      },
                 child: SvgPicture.asset('assets/icons/user.svg')),
           ],
         ),
@@ -66,7 +66,7 @@ class _MainPageState extends State<MainPage> {
               return Center(
                   child: Text('Something went wrong ${snapshot.error}'));
             } else if (snapshot.hasData) {
-              return MainHome(
+              return UserHome(
                 userAccount: snapshot.data,
               );
             } else {

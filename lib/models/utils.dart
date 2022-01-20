@@ -7,16 +7,9 @@ class Utils {
   static String product = '';
   static String desc = '';
   static int price = 0;
-
-  static get getId => id;
-  static get getImage => image;
-  static get getProduct => product;
-  static get getDesc => desc;
-  static get getPrice => price;
-
   static String name = '';
-
-  static get getName => name;
+  static bool useGoogle = false;
+  static String currentRoute = '/home';
 
   static void showMessage(String? text) {
     if (text == null) return;
