@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_app/constants.dart';
 import 'package:flutter_simple_app/models/users/user.dart';
-import 'package:flutter_simple_app/models/utils.dart';
+import 'package:flutter_simple_app/views/users/pages/user_home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'pages/main_home.dart';
 
@@ -17,44 +17,49 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final user = FirebaseAuth.instance.currentUser;
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding + 15),
-        height: 80,
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(
-              color: kPrimaryColor.withOpacity(0.33),
-              offset: const Offset(0, -10),
-              blurRadius: 35)
-        ]),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-              onTap: (Utils.currentRoute == '/home')
-                  ? null
-                  : () {
-                      Navigator.pushReplacementNamed(context, '/home',
-                          arguments: 'arguments data');
-                    },
-              child: SvgPicture.asset(
+      bottomNavigationBar: NavigationBarTheme(
+        data: NavigationBarThemeData(
+            indicatorColor: kPrimaryColor.withOpacity(0.43),
+            labelTextStyle: MaterialStateProperty.all(
+                const TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+        child: NavigationBar(
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+          backgroundColor: Colors.white,
+          selectedIndex: index,
+          height: 80,
+          onDestinationSelected: (value) => setState(() {
+            index = value;
+          }),
+          destinations: [
+            NavigationDestination(
+              selectedIcon: SvgPicture.asset(
                 'assets/icons/shopping-cart.svg',
-                color: kPrimaryColor,
+                color: kDarkBlueColor,
+              ),
+              label: 'Home',
+              icon: SvgPicture.asset(
+                'assets/icons/shopping-cart.svg',
               ),
             ),
-            GestureDetector(
-                onTap: () {},
-                child: SvgPicture.asset('assets/icons/heart.svg')),
-            GestureDetector(
-                onTap: () {
-                  Utils.currentRoute = '/user';
-                  Navigator.pushReplacementNamed(context, '/user',
-                      arguments: 'arguments data');
-                },
-                child: SvgPicture.asset('assets/icons/user.svg')),
+            NavigationDestination(
+              selectedIcon: SvgPicture.asset('assets/icons/heart.svg',
+                  color: kDarkBlueColor),
+              label: 'Favourite',
+              icon: SvgPicture.asset('assets/icons/heart.svg'),
+            ),
+            NavigationDestination(
+              selectedIcon: SvgPicture.asset(
+                'assets/icons/user.svg',
+                color: kDarkBlueColor,
+              ),
+              label: 'User',
+              icon: SvgPicture.asset('assets/icons/user.svg'),
+            ),
           ],
         ),
       ),
@@ -66,9 +71,14 @@ class _MainPageState extends State<MainPage> {
               return Center(
                   child: Text('Something went wrong ${snapshot.error}'));
             } else if (snapshot.hasData) {
-              return MainHome(
-                userAccount: snapshot.data,
-              );
+              final screen = [
+                MainHome(userAccount: snapshot.data),
+                MainHome(userAccount: snapshot.data),
+                UserHome(
+                  userAccount: snapshot.data,
+                )
+              ];
+              return screen[index];
             } else {
               return const Center(child: CircularProgressIndicator());
             }

@@ -101,9 +101,9 @@ class _LoginPageState extends State<SignUp> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15))),
                 onPressed: () {
-                  final provider =
-                      Provider.of<GoogleSignInProvider>(context, listen: false);
-                  provider.signIn();
+                  // final provider =
+                  //     Provider.of<GoogleSignInProvider>(context, listen: false);
+                  // provider.signIn();
                 },
                 icon: const FaIcon(
                   FontAwesomeIcons.google,
