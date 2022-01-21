@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_app/constants.dart';
 import 'package:flutter_simple_app/models/users/user.dart';
+import 'package:flutter_simple_app/views/favourite/page/favourite_page.dart';
 import 'package:flutter_simple_app/views/users/pages/user_home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'pages/main_home.dart';
@@ -73,7 +74,7 @@ class _MainPageState extends State<MainPage> {
             } else if (snapshot.hasData) {
               final screen = [
                 MainHome(userAccount: snapshot.data),
-                MainHome(userAccount: snapshot.data),
+                FavouriteHome(userAccount: snapshot.data),
                 UserHome(
                   userAccount: snapshot.data,
                 )

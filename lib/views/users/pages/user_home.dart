@@ -1,12 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_simple_app/constants.dart';
 import 'package:flutter_simple_app/models/bloc/users/user_bloc.dart';
 import 'package:flutter_simple_app/models/users/user.dart';
 import 'package:flutter_simple_app/views/users/components/headers_users.dart';
 import 'package:flutter_simple_app/views/users/components/user_list.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({Key? key, required this.userAccount}) : super(key: key);

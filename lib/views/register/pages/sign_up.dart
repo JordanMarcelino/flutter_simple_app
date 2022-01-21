@@ -2,14 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_app/main.dart';
-import 'package:flutter_simple_app/models/users/google_sign_in.dart';
 import 'package:flutter_simple_app/models/users/user.dart';
 import 'package:flutter_simple_app/models/utils.dart';
 import 'package:flutter_simple_app/views/register/components/container_signup.dart';
 import 'package:flutter_simple_app/views/register/components/sign_up_account.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 import '../../../constants.dart';
 import '../components/login_button.dart';
 

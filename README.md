@@ -1,6 +1,9 @@
 # flutter_simple_app
 
-Making simple app (cloning simple e-commerce) with flutter framework
+Making simple app (cloning simple e-commerce) with flutter framework.
+Im working on the front end with firebase (simple implementation).
+
+If you want to participate to this project especially with making backend, feel free to push a request to this project, and thanks for your participate.
 
 ## Getting Started
 

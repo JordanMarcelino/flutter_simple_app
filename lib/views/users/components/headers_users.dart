@@ -20,6 +20,7 @@ class HeaderUser extends StatelessWidget {
       children: [
         Container(
           alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(bottom: size.height * 0.04),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -50,18 +51,15 @@ class HeaderUser extends StatelessWidget {
                 bottomRight: Radius.circular(60)),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(top: size.height * 0.06),
-          child: Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Transform.scale(
-              scale: 0.5,
-              child: LottieBuilder.network(
-                  'https://assets4.lottiefiles.com/packages/lf20_aodoKw.json',
-                  fit: BoxFit.cover),
-            ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Transform.scale(
+            scale: 0.5,
+            child: LottieBuilder.network(
+                'https://assets4.lottiefiles.com/packages/lf20_aodoKw.json',
+                fit: BoxFit.cover),
           ),
         ),
       ],

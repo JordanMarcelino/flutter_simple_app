@@ -47,6 +47,7 @@ class HeaderDetails extends StatelessWidget {
                 ),
                 const Spacer(),
                 SidebarIcon(
+                  widget: widget,
                   scale: 3,
                   event: ClickedLove(),
                   icon: 'assets/icons/heart.svg',
@@ -56,6 +57,7 @@ class HeaderDetails extends StatelessWidget {
                 ),
                 const Spacer(),
                 SidebarIcon(
+                  widget: widget,
                   scale: 3,
                   event: ClickedLike(),
                   icon: 'assets/icons/thumbs-up.svg',
@@ -65,6 +67,7 @@ class HeaderDetails extends StatelessWidget {
                 ),
                 const Spacer(),
                 SidebarIcon(
+                  widget: widget,
                   scale: 1.8,
                   event: ClickedDislike(),
                   icon: 'assets/icons/thumbs-down.svg',
@@ -74,6 +77,7 @@ class HeaderDetails extends StatelessWidget {
                 ),
                 const Spacer(),
                 SidebarIcon(
+                  widget: widget,
                   scale: 1.3,
                   event: ClickedBell(),
                   icon: 'assets/icons/bell.svg',
