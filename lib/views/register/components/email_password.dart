@@ -28,7 +28,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
       margin: const EdgeInsets.only(top: kDefaultPadding),
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding + 20),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
+        padding: const EdgeInsets.symmetric(vertical: kDefaultPadding - 10),
         child: Column(
           children: [
             TextField(
